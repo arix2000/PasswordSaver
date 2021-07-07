@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">PasswordSaver</string>
+    <string name="app_name">Twoje Hasła</string>
+    <string name="enter_password">Podaj swoje hasło:</string>
 </resources>
