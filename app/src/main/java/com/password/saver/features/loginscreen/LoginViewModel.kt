@@ -25,5 +25,4 @@ class LoginViewModel(
     fun saveMainPassword(mainPassword: String) {
         repository.saveMainPassword(mainPassword)
     }
-
 }

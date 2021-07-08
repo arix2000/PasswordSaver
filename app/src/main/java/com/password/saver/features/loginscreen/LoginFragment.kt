@@ -12,7 +12,6 @@ fun LoginFragment(navController: NavController) {
     val viewModel = getViewModel<LoginViewModel>()
     PasswordSaverTheme {
         val password by viewModel.getMainPassword().observeAsState()
-
         if (password?.isEmpty() == true)
             SetupPasswordScreen(navController)
         else
