@@ -36,7 +36,8 @@ fun LoginFragment(navController: NavController) {
                 OutlinedTextField(
                     value = text,
                     onValueChange = { text = it },
-                    label = { Text("Hasło") }
+                    label = { Text("Hasło") },
+                    shape = CircleShape
                 )
                 Box(modifier = Modifier.height(25.dp))
                 Button(onClick = { checkPassword(navController) }, shape = CircleShape) {
