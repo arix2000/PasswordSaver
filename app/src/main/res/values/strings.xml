@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Twoje Hasła</string>
     <string name="enter_password">Podaj swoje hasło:</string>
+    <string name="setup_password">Ustaw swoje hasło:</string>
+    <string name="different_passwords">Hasła różnią się od siebie</string>
+    <string name="password">Hasło</string>
+    <string name="repeat_password">Powtórz hasło</string>
+    <string name="empty_pools">Zostały puste pola</string>
 </resources>

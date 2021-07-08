@@ -9,10 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -20,10 +18,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.password.saver.features.loginscreen.LoginFragment
+import com.password.saver.features.loginscreen.LoginScreen
+import com.password.saver.features.loginscreen.SetupPasswordScreen
 import com.password.saver.features.passwordlist.PasswordListFragment
 
 
-class MainActivity : ComponentActivity() {
+class MyPasswordsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +35,15 @@ class MainActivity : ComponentActivity() {
                     TopBar(navController, shouldShowBackButton)
                 }
             ) {
-                NavHost(navController = navController, startDestination = "loginScreen") {
-                    composable("loginScreen") {
+                NavHost(navController = navController, startDestination = ROUTE_LOGIN_FRAGMENT) {
+                    composable(ROUTE_LOGIN_FRAGMENT) {
                         LoginFragment(navController); shouldShowBackButton = false
                     }
-                    composable("passwordList") {
+                    composable(ROUTE_PASSWORD_LIST) {
                         PasswordListFragment(); shouldShowBackButton = true
+                    }
+                    composable(ROUTE_LOGIN_SCREEN) {
+                        LoginScreen(navController); shouldShowBackButton = false
                     }
                 }
             }
@@ -67,5 +70,11 @@ class MainActivity : ComponentActivity() {
             )
 
         }
+    }
+
+    companion object {
+        const val ROUTE_LOGIN_FRAGMENT = "loginFragment"
+        const val ROUTE_PASSWORD_LIST = "passwordList"
+        const val ROUTE_LOGIN_SCREEN = "loginScreen"
     }
 }
