@@ -1,4 +1,4 @@
-package com.password.saver.features.loginscreen
+package com.password.saver.features.loginscreen.ui
 
 import android.content.Context
 import android.widget.Toast
@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.password.saver.MyPasswordsActivity.Companion.ROUTE_LOGIN_SCREEN
 import com.password.saver.R
+import com.password.saver.features.loginscreen.LoginViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable

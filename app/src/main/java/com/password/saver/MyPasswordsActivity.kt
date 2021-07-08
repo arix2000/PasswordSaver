@@ -17,9 +17,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.password.saver.features.loginscreen.LoginFragment
-import com.password.saver.features.loginscreen.LoginScreen
-import com.password.saver.features.loginscreen.SetupPasswordScreen
+import com.password.saver.features.loginscreen.ui.LoginFragment
+import com.password.saver.features.loginscreen.ui.LoginScreen
 import com.password.saver.features.passwordlist.PasswordListFragment
 
 

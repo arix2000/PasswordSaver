@@ -1,9 +1,10 @@
-package com.password.saver.features.loginscreen
+package com.password.saver.features.loginscreen.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavController
+import com.password.saver.features.loginscreen.LoginViewModel
 import com.password.saver.ui.theme.PasswordSaverTheme
 import org.koin.androidx.compose.getViewModel
 
