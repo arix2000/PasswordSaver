@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -27,26 +28,37 @@ class MyPasswordsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var shouldShowBackButton by remember { mutableStateOf(false) }
-            val navController = rememberNavController()
-            Scaffold(
-                topBar = {
-                    TopBar(navController, shouldShowBackButton)
+            AppContent()
+        }
+    }
+
+    @Composable
+    private fun AppContent() {
+        var shouldShowBackButton by remember { mutableStateOf(false) }
+        val navController = rememberNavController()
+        Scaffold(
+            topBar = {
+                TopBar(navController, shouldShowBackButton)
+            }
+        ) {
+            NavHost(navController = navController, startDestination = ROUTE_LOGIN_FRAGMENT) {
+                composable(ROUTE_LOGIN_FRAGMENT) {
+                    LoginFragment(navController); shouldShowBackButton = false
                 }
-            ) {
-                NavHost(navController = navController, startDestination = ROUTE_LOGIN_FRAGMENT) {
-                    composable(ROUTE_LOGIN_FRAGMENT) {
-                        LoginFragment(navController); shouldShowBackButton = false
-                    }
-                    composable(ROUTE_PASSWORD_LIST) {
-                        PasswordListFragment(); shouldShowBackButton = true
-                    }
-                    composable(ROUTE_LOGIN_SCREEN) {
-                        LoginScreen(navController); shouldShowBackButton = false
-                    }
+                composable(ROUTE_PASSWORD_LIST) {
+                    PasswordListFragment(); shouldShowBackButton = true
+                }
+                composable(ROUTE_LOGIN_SCREEN) {
+                    LoginScreen(navController); shouldShowBackButton = false
                 }
             }
         }
+    }
+
+    @Preview
+    @Composable
+    private fun DefaultPreview() {
+        AppContent()
     }
 
     @Composable
