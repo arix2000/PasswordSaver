@@ -9,29 +9,22 @@ import com.password.saver.models.Password
 
 @Database(entities = [Password::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract val passwordDao: PasswordDao
+    abstract fun passwordDao(): PasswordDao
 
     companion object {
-        private var INSTANCE: AppDatabase? = null
+        @Volatile
+        private var instance: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {
-            synchronized(this)
-            {
-                var instance = INSTANCE
-                if (instance == null) {
-
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        AppDatabase::class.java, "appDatabase.db")
-                        .fallbackToDestructiveMigration()
-                        .build()
-
-                    INSTANCE = instance
-                }
-
-                return instance
+            return instance ?: synchronized(this) {
+                instance ?: Room.databaseBuilder(
+                    context,
+                    AppDatabase::class.java,
+                    "app_database"
+                )
+                    .build()
+                    .also { instance = it }
             }
-
         }
     }
 }

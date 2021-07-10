@@ -5,9 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Password(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
     val title: String,
     val login: String,
     val password: String
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null
+}

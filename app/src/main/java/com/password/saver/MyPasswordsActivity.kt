@@ -20,7 +20,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.password.saver.features.loginscreen.ui.LoginFragment
 import com.password.saver.features.loginscreen.ui.LoginScreen
-import com.password.saver.features.passwordlist.PasswordListFragment
+import com.password.saver.features.passwordlist.ui.PasswordDetails
+import com.password.saver.features.passwordlist.ui.PasswordsFragment
 
 
 class MyPasswordsActivity : ComponentActivity() {
@@ -43,13 +44,20 @@ class MyPasswordsActivity : ComponentActivity() {
         ) {
             NavHost(navController = navController, startDestination = ROUTE_LOGIN_FRAGMENT) {
                 composable(ROUTE_LOGIN_FRAGMENT) {
-                    LoginFragment(navController); shouldShowBackButton = false
+                    LoginFragment(navController)
+                    shouldShowBackButton = false
                 }
                 composable(ROUTE_PASSWORD_LIST) {
-                    PasswordListFragment(); shouldShowBackButton = true
+                    PasswordsFragment(navController)
+                    shouldShowBackButton = true
                 }
                 composable(ROUTE_LOGIN_SCREEN) {
-                    LoginScreen(navController); shouldShowBackButton = false
+                    LoginScreen(navController)
+                    shouldShowBackButton = false
+                }
+                composable(ROUTE_PASSWORD_DETAILS) {
+                    PasswordDetails()
+                    shouldShowBackButton = true
                 }
             }
         }
@@ -87,5 +95,6 @@ class MyPasswordsActivity : ComponentActivity() {
         const val ROUTE_LOGIN_FRAGMENT = "loginFragment"
         const val ROUTE_PASSWORD_LIST = "passwordList"
         const val ROUTE_LOGIN_SCREEN = "loginScreen"
+        const val ROUTE_PASSWORD_DETAILS = "passwordDetails"
     }
 }

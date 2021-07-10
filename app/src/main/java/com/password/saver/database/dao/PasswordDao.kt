@@ -1,19 +1,17 @@
 package com.password.saver.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.password.saver.models.Password
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PasswordDao {
-    @Insert
-    fun insert(password: Password)
+    @Insert()
+    suspend fun insert(password: Password)
 
     @Delete
-    fun delete(password: Password)
+    suspend fun delete(password: Password)
 
     @Query("SELECT * FROM password")
-    fun getAllPasswords(): List<Password>
+    fun getAllPasswords(): Flow<List<Password>>
 }

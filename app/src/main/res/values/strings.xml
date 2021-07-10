@@ -8,4 +8,6 @@
     <string name="empty_pools">Zostały puste pola</string>
     <string name="wrong_password">Nieprawidłowe hasło</string>
     <string name="next">Dalej</string>
+    <string name="login_with_colon">Login:</string>
+    <string name="password_with_colon">Hasło:</string>
 </resources>

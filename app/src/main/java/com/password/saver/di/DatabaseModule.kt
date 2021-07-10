@@ -7,5 +7,5 @@ val databaseModule = module {
 
     single { AppDatabase.getInstance(get()) }
 
-    single { get<AppDatabase>().passwordDao }
+    single { get<AppDatabase>().passwordDao() }
 }
