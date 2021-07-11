@@ -10,4 +10,7 @@
     <string name="next">Dalej</string>
     <string name="login_with_colon">Login:</string>
     <string name="password_with_colon">Hasło:</string>
+    <string name="copied">Skopiowano!</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
 </resources>

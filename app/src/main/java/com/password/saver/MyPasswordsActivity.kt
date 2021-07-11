@@ -3,25 +3,22 @@ package com.password.saver
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.password.saver.features.loginscreen.ui.LoginFragment
 import com.password.saver.features.loginscreen.ui.LoginScreen
-import com.password.saver.features.passwordlist.ui.PasswordDetails
+import com.password.saver.features.passwordlist.ui.screens.PasswordDetails
 import com.password.saver.features.passwordlist.ui.PasswordsFragment
+import com.password.saver.models.Password
+import com.password.saver.models.Password.Companion.PASSWORD_ARGUMENT_KEY
+import com.password.saver.ui.appcomposables.AppSnackBarHost
+import com.password.saver.ui.appcomposables.TopBar
 
 
 class MyPasswordsActivity : ComponentActivity() {
@@ -37,9 +34,15 @@ class MyPasswordsActivity : ComponentActivity() {
     private fun AppContent() {
         var shouldShowBackButton by remember { mutableStateOf(false) }
         val navController = rememberNavController()
+        val scaffoldState = rememberScaffoldState()
+        var previousSnackBarState: SnackbarHostState? = null
         Scaffold(
+            scaffoldState = scaffoldState,
             topBar = {
                 TopBar(navController, shouldShowBackButton)
+            },
+            snackbarHost = {
+                AppSnackBarHost(hostState = it)
             }
         ) {
             NavHost(navController = navController, startDestination = ROUTE_LOGIN_FRAGMENT) {
@@ -55,10 +58,14 @@ class MyPasswordsActivity : ComponentActivity() {
                     LoginScreen(navController)
                     shouldShowBackButton = false
                 }
-                composable(ROUTE_PASSWORD_DETAILS) {
-                    PasswordDetails()
-                    shouldShowBackButton = true
-                }
+                composable(
+                    "$ROUTE_PASSWORD_DETAILS/{password}",
+                    arguments = listOf(navArgument(PASSWORD_ARGUMENT_KEY) { type = NavType.StringType })) { backStackEntry ->
+                    backStackEntry.arguments?.getString(PASSWORD_ARGUMENT_KEY)?.let {
+                        PasswordDetails(Password.fromJson(it), scaffoldState)
+                    }
+                        shouldShowBackButton = true
+                    }
             }
         }
     }
@@ -67,28 +74,6 @@ class MyPasswordsActivity : ComponentActivity() {
     @Composable
     private fun DefaultPreview() {
         AppContent()
-    }
-
-    @Composable
-    private fun TopBar(navController: NavController, shouldShowBackButton: Boolean) {
-        TopAppBar {
-            if (shouldShowBackButton)
-                IconButton(
-                    onClick = { navController.popBackStack() },
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back",
-                    )
-                }
-            Spacer(modifier = Modifier.width(10.dp))
-            Text(
-                text = stringResource(R.string.app_name),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-
-        }
     }
 
     companion object {

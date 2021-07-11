@@ -28,9 +28,11 @@ fun ListItemPassword(password: Password, onClick: () -> Unit) {
             shape = CircleShape,
             contentColor = Color.White,
             elevation = 2.dp,
-            modifier = Modifier.fillMaxWidth().clickable {
-                onClick()
-            }
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onClick()
+                }
             ) {
 
             Column(Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
@@ -67,10 +69,14 @@ fun ListItemPassword(password: Password, onClick: () -> Unit) {
                 Spacer(modifier = Modifier.height(5.dp))
             }
         }
-        Icon(
-            imageVector = Icons.Rounded.KeyboardArrowRight,
-            contentDescription = "nextButton",
-            modifier = Modifier.size(30.dp).align(Alignment.CenterEnd)
-        )
+        Row(modifier = Modifier.align(Alignment.CenterEnd)) {
+            Icon(
+                imageVector = Icons.Rounded.KeyboardArrowRight,
+                contentDescription = "nextButton",
+                modifier = Modifier
+                    .size(30.dp)
+            )
+            Spacer(modifier = Modifier.width(25.dp))
+        }
     }
 }

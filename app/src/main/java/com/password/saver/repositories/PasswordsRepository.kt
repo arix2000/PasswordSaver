@@ -22,6 +22,12 @@ class PasswordsRepository(private val dao: PasswordDao) {
         }
     }
 
+    fun update(password: Password) {
+        ioScope.launch {
+            dao.update(password)
+        }
+    }
+
     fun getPasswords(): Flow<List<Password>> {
         return dao.getAllPasswords()
     }

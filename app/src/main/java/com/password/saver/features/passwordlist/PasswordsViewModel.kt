@@ -15,6 +15,10 @@ class PasswordsViewModel(private val repository: PasswordsRepository): ViewModel
         repository.insert(password)
     }
 
+    fun update(password: Password) {
+        repository.update(password)
+    }
+
     fun getPasswords(): Flow<List<Password>> {
         return repository.getPasswords()
     }
