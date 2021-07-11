@@ -1,6 +1,7 @@
 package com.password.saver
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
@@ -25,6 +26,7 @@ class MyPasswordsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSoftInputMode(true)
         setContent {
             AppContent()
         }
@@ -35,7 +37,6 @@ class MyPasswordsActivity : ComponentActivity() {
         var shouldShowBackButton by remember { mutableStateOf(false) }
         val navController = rememberNavController()
         val scaffoldState = rememberScaffoldState()
-        var previousSnackBarState: SnackbarHostState? = null
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
@@ -68,6 +69,13 @@ class MyPasswordsActivity : ComponentActivity() {
                     }
             }
         }
+    }
+
+    private fun setSoftInputMode(boolean: Boolean) {
+        if (boolean)
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        else
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
     }
 
     @Preview

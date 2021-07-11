@@ -19,6 +19,7 @@ data class Password(
 
     companion object {
         const val PASSWORD_ARGUMENT_KEY = "password"
+        val EMPTY = Password("","","")
 
         fun fromJson(string: String): Password {
             return Gson().fromJson(string, Password::class.java)
