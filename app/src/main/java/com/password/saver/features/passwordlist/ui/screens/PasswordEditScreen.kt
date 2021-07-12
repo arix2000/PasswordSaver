@@ -4,6 +4,8 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.ScaffoldState
@@ -13,10 +15,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -30,6 +37,7 @@ import com.password.saver.ui.theme.PasswordSaverTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
+@ExperimentalComposeUiApi
 @Composable
 fun PasswordEditScreen(
     password: Password,
@@ -53,6 +61,10 @@ fun PasswordEditScreen(
             ?.savedStateHandle?.set(PASSWORD_ARGUMENT_KEY, newPassword.toJson())
         navController.popBackStack()
     }
+
+    val focusRequester = remember { FocusRequester() }
+    val focusRequester2 = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     PasswordSaverTheme {
         Box {
@@ -81,7 +93,10 @@ fun PasswordEditScreen(
                         value = title,
                         onValueChange = { title = it },
                         shape = CircleShape,
-                        maxLines = 1
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        keyboardActions = KeyboardActions {
+                            focusRequester.requestFocus()
+                        }
                     )
 
                     Spacer(modifier = Modifier.height(25.dp))
@@ -91,7 +106,11 @@ fun PasswordEditScreen(
                         value = login,
                         onValueChange = { login = it },
                         shape = CircleShape,
-                        maxLines = 1
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                        keyboardActions = KeyboardActions {
+                            focusRequester2.requestFocus()
+                        },
+                        modifier = Modifier.focusRequester(focusRequester)
                     )
 
                     Spacer(modifier = Modifier.height(25.dp))
@@ -101,7 +120,11 @@ fun PasswordEditScreen(
                         value = passwordValue,
                         onValueChange = { passwordValue = it },
                         shape = CircleShape,
-                        maxLines = 1
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions {
+                            keyboardController?.hide()
+                        },
+                        modifier = Modifier.focusRequester(focusRequester2)
                     )
 
                     Spacer(modifier = Modifier.height(25.dp))
