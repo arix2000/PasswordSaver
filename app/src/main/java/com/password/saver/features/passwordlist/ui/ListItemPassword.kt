@@ -2,9 +2,10 @@ package com.password.saver.features.passwordlist.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.material.Surface
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.Composable
@@ -25,9 +26,9 @@ fun ListItemPassword(password: Password, onClick: () -> Unit) {
     Box {
         Card(
             backgroundColor = VioletDark,
-            shape = CircleShape,
+            shape = RoundedCornerShape(35.dp),
             contentColor = Color.White,
-            elevation = 2.dp,
+            elevation = 0.dp,
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
