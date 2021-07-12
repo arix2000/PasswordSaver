@@ -35,7 +35,7 @@ fun ListItemPassword(password: Password, onClick: () -> Unit) {
                 }
             ) {
 
-            Column(Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
+            Column(Modifier.padding(horizontal = 20.dp, vertical = 10.dp).padding(end = 30.dp)) {
                 Text(
                     text = password.title,
                     maxLines = 1,

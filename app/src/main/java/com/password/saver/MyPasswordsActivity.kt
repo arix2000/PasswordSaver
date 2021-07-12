@@ -16,6 +16,7 @@ import com.password.saver.features.loginscreen.ui.LoginFragment
 import com.password.saver.features.loginscreen.ui.LoginScreen
 import com.password.saver.features.passwordlist.ui.screens.PasswordDetails
 import com.password.saver.features.passwordlist.ui.PasswordsFragment
+import com.password.saver.features.passwordlist.ui.screens.PasswordAddScreen
 import com.password.saver.models.Password
 import com.password.saver.models.Password.Companion.PASSWORD_ARGUMENT_KEY
 import com.password.saver.ui.appcomposables.AppSnackBarHost
@@ -39,12 +40,8 @@ class MyPasswordsActivity : ComponentActivity() {
         val scaffoldState = rememberScaffoldState()
         Scaffold(
             scaffoldState = scaffoldState,
-            topBar = {
-                TopBar(navController, shouldShowBackButton)
-            },
-            snackbarHost = {
-                AppSnackBarHost(hostState = it)
-            }
+            topBar = { TopBar(navController, shouldShowBackButton) },
+            snackbarHost = { AppSnackBarHost(hostState = it) }
         ) {
             NavHost(navController = navController, startDestination = ROUTE_LOGIN_FRAGMENT) {
                 composable(ROUTE_LOGIN_FRAGMENT) {
@@ -61,12 +58,17 @@ class MyPasswordsActivity : ComponentActivity() {
                 }
                 composable(
                     "$ROUTE_PASSWORD_DETAILS/{password}",
-                    arguments = listOf(navArgument(PASSWORD_ARGUMENT_KEY) { type = NavType.StringType })) { backStackEntry ->
+                    listOf(navArgument(PASSWORD_ARGUMENT_KEY) { type = NavType.StringType })
+                ) { backStackEntry ->
                     backStackEntry.arguments?.getString(PASSWORD_ARGUMENT_KEY)?.let {
                         PasswordDetails(Password.fromJson(it), scaffoldState)
                     }
-                        shouldShowBackButton = true
-                    }
+                    shouldShowBackButton = true
+                }
+                composable(ROUTE_PASSWORD_ADD) {
+                    PasswordAddScreen(scaffoldState, navController)
+                    shouldShowBackButton = true
+                }
             }
         }
     }
@@ -89,5 +91,6 @@ class MyPasswordsActivity : ComponentActivity() {
         const val ROUTE_PASSWORD_LIST = "passwordList"
         const val ROUTE_LOGIN_SCREEN = "loginScreen"
         const val ROUTE_PASSWORD_DETAILS = "passwordDetails"
+        const val ROUTE_PASSWORD_ADD = "passwordAdd"
     }
 }

@@ -48,7 +48,7 @@ fun PasswordDetails(
 
                 ) {
                     Spacer(modifier = Modifier.height(30.dp))
-                    Text(text = "Tytuł:", fontSize = 18.sp)
+                    Text(text = stringResource(R.string.title_with_colon), fontSize = 18.sp)
                     Text(
                         text = password.title,
                         fontSize = 22.sp,

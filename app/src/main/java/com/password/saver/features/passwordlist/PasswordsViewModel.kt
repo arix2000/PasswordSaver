@@ -11,7 +11,7 @@ class PasswordsViewModel(private val repository: PasswordsRepository): ViewModel
         repository.delete(password)
     }
 
-    fun insert(password: Password) {
+    fun add(password: Password) {
         repository.insert(password)
     }
 

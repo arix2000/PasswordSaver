@@ -9,8 +9,15 @@
     <string name="wrong_password">Nieprawidłowe hasło</string>
     <string name="next">Dalej</string>
     <string name="login_with_colon">Login:</string>
+    <string name="login">Login</string>
     <string name="password_with_colon">Hasło:</string>
     <string name="copied">Skopiowano!</string>
     <string name="edit">Edytuj</string>
     <string name="delete">Usuń</string>
+    <string name="title_with_colon">Tytuł:</string>
+    <string name="title">Tytuł</string>
+    <string name="add_new_password">Dodaj nowe hasło</string>
+    <string name="edit_password">Edytuj hasło</string>
+    <string name="add">Dodaj</string>
+    <string name="all_pools_required">Wszystkie pola są wymagane!</string>
 </resources>
