@@ -31,9 +31,7 @@ fun ListItemPassword(password: Password, onClick: () -> Unit) {
             elevation = 0.dp,
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {
-                    onClick()
-                }
+                .clickable { onClick() }
             ) {
 
             Column(Modifier.padding(horizontal = 20.dp, vertical = 10.dp).padding(end = 30.dp)) {

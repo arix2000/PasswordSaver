@@ -16,8 +16,11 @@
     <string name="delete">Usuń</string>
     <string name="title_with_colon">Tytuł:</string>
     <string name="title">Tytuł</string>
-    <string name="add_new_password">Dodaj nowe hasło</string>
-    <string name="edit_password">Edytuj hasło</string>
+    <string name="add_new_password">Dodaj nowe wpis</string>
+    <string name="edit_password">Edytuj wpis</string>
     <string name="add">Dodaj</string>
     <string name="all_pools_required">Wszystkie pola są wymagane!</string>
+    <string name="approve">Zaktualizuj</string>
+    <string name="updated">Zaktualizowano!</string>
+    <string name="added">Dodano!</string>
 </resources>

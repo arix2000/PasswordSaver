@@ -1,42 +1,41 @@
 package com.password.saver.features.passwordlist.ui.screens
 
-import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ClipboardManager
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
+import com.password.saver.MyPasswordsActivity.Companion.ROUTE_PASSWORD_EDIT
 import com.password.saver.R
 import com.password.saver.features.passwordlist.ui.composables.DeleteButton
-import com.password.saver.features.passwordlist.ui.composables.EditButton
+import com.password.saver.features.passwordlist.ui.composables.IconRightButton
 import com.password.saver.models.Password
 import com.password.saver.ui.appcomposables.CopyButton
 import com.password.saver.ui.theme.ColorPrimary
 import com.password.saver.ui.theme.PasswordSaverTheme
-import kotlinx.coroutines.launch
 
 
 @Composable
 fun PasswordDetails(
-    password: Password,
+    password2: Password,
+    navController: NavController,
     scaffoldState: ScaffoldState
 ) {
+    val password = navController.currentBackStackEntry?.savedStateHandle
+        ?.get<String>(Password.PASSWORD_ARGUMENT_KEY)
+        ?.let { Password.fromJson(it) } ?: password2
+
     PasswordSaverTheme {
         Box {
             Surface(modifier = Modifier.fillMaxSize()) {
@@ -85,9 +84,12 @@ fun PasswordDetails(
                             //TODO
                         })
                         Spacer(modifier = Modifier.width(25.dp))
-                        EditButton(onClick = {
-                            //TODO
-                        })
+                        IconRightButton(
+                            text = stringResource(R.string.edit),
+                            imageVector = Icons.Rounded.Edit
+                        ) {
+                            navController.navigate("$ROUTE_PASSWORD_EDIT/${password.toJson()}")
+                        }
                     }
                 }
             }

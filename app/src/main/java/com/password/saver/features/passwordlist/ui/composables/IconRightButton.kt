@@ -8,17 +8,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.password.saver.R
 
 @Composable
-fun EditButton(
-    text: String = stringResource(id = R.string.edit),
+fun IconRightButton(
+    text: String,
+    imageVector: ImageVector,
     onClick: () -> Unit
 ) {
     Button(
@@ -28,12 +26,11 @@ fun EditButton(
         Text(text = text.uppercase(), Modifier.padding(3.dp))
         Spacer(modifier = Modifier.width(4.dp))
         Image(
-            imageVector = Icons.Rounded.Edit,
+            imageVector = imageVector,
             contentDescription = null,
             modifier = Modifier
                 .padding(3.dp)
-                .height(20.dp),
-
+                .height(20.dp)
         )
     }
 }

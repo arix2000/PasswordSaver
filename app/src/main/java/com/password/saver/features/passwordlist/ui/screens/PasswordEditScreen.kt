@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,22 +24,35 @@ import com.password.saver.R
 import com.password.saver.features.passwordlist.PasswordsViewModel
 import com.password.saver.features.passwordlist.ui.composables.IconRightButton
 import com.password.saver.models.Password
+import com.password.saver.models.Password.Companion.PASSWORD_ARGUMENT_KEY
 import com.password.saver.ui.theme.ColorPrimary
 import com.password.saver.ui.theme.PasswordSaverTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
-import org.koin.core.context.GlobalContext
-
 
 @Composable
-fun PasswordAddScreen(
+fun PasswordEditScreen(
+    password: Password,
     scaffoldState: ScaffoldState,
     navController: NavController
 ) {
-    var title by remember { mutableStateOf("") }
-    var login by remember { mutableStateOf("") }
-    var passwordValue by remember { mutableStateOf("") }
+
+    var title by remember { mutableStateOf(password.title) }
+    var login by remember { mutableStateOf(password.login) }
+    var passwordValue by remember { mutableStateOf(password.password) }
+    val context = LocalContext.current
     val viewModel = getViewModel<PasswordsViewModel>()
+    fun updateAndBackWithData() {
+        val newPassword = Password(title, login, passwordValue)
+
+        viewModel.update(newPassword.apply { id = password.id })
+
+        Toast.makeText(context, R.string.updated, Toast.LENGTH_SHORT).show()
+
+        navController.previousBackStackEntry
+            ?.savedStateHandle?.set(PASSWORD_ARGUMENT_KEY, newPassword.toJson())
+        navController.popBackStack()
+    }
 
     PasswordSaverTheme {
         Box {
@@ -48,14 +64,18 @@ fun PasswordAddScreen(
                         .padding(10.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
+
                     Spacer(modifier = Modifier.height(30.dp))
+
                     Text(
-                        text = stringResource(R.string.add_new_password),
+                        text = stringResource(R.string.edit_password),
                         fontSize = 22.sp,
                         color = ColorPrimary,
                         fontWeight = FontWeight.SemiBold
                     )
+
                     Spacer(modifier = Modifier.height(25.dp))
+
                     Text(text = stringResource(R.string.title), fontSize = 18.sp)
                     OutlinedTextField(
                         value = title,
@@ -63,7 +83,9 @@ fun PasswordAddScreen(
                         shape = CircleShape,
                         maxLines = 1
                     )
+
                     Spacer(modifier = Modifier.height(25.dp))
+
                     Text(text = stringResource(R.string.login), fontSize = 18.sp)
                     OutlinedTextField(
                         value = login,
@@ -71,7 +93,9 @@ fun PasswordAddScreen(
                         shape = CircleShape,
                         maxLines = 1
                     )
+
                     Spacer(modifier = Modifier.height(25.dp))
+
                     Text(text = stringResource(R.string.password), fontSize = 18.sp)
                     OutlinedTextField(
                         value = passwordValue,
@@ -79,18 +103,17 @@ fun PasswordAddScreen(
                         shape = CircleShape,
                         maxLines = 1
                     )
+
                     Spacer(modifier = Modifier.height(25.dp))
+
                     val snackBarText = stringResource(R.string.all_pools_required)
                     val scope = rememberCoroutineScope()
-                    val context = LocalContext.current
                     IconRightButton(
-                        text = stringResource(R.string.add),
-                        imageVector = Icons.Rounded.Add
+                        text = stringResource(R.string.approve),
+                        imageVector = Icons.Rounded.Done
                     ) {
                         if (title.isNotBlank() && login.isNotBlank() && passwordValue.isNotBlank()) {
-                            viewModel.add(Password(title, login, passwordValue))
-                            Toast.makeText(context, R.string.added, Toast.LENGTH_SHORT).show()
-                            navController.navigateUp()
+                            updateAndBackWithData()
                         } else {
                             scope.launch {
                                 scaffoldState.snackbarHostState

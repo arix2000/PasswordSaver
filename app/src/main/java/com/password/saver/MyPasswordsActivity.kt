@@ -17,6 +17,7 @@ import com.password.saver.features.loginscreen.ui.LoginScreen
 import com.password.saver.features.passwordlist.ui.screens.PasswordDetails
 import com.password.saver.features.passwordlist.ui.PasswordsFragment
 import com.password.saver.features.passwordlist.ui.screens.PasswordAddScreen
+import com.password.saver.features.passwordlist.ui.screens.PasswordEditScreen
 import com.password.saver.models.Password
 import com.password.saver.models.Password.Companion.PASSWORD_ARGUMENT_KEY
 import com.password.saver.ui.appcomposables.AppSnackBarHost
@@ -56,17 +57,26 @@ class MyPasswordsActivity : ComponentActivity() {
                     LoginScreen(navController)
                     shouldShowBackButton = false
                 }
+                composable(ROUTE_PASSWORD_ADD) {
+                    PasswordAddScreen(scaffoldState, navController)
+                    shouldShowBackButton = true
+                }
                 composable(
                     "$ROUTE_PASSWORD_DETAILS/{password}",
                     listOf(navArgument(PASSWORD_ARGUMENT_KEY) { type = NavType.StringType })
                 ) { backStackEntry ->
                     backStackEntry.arguments?.getString(PASSWORD_ARGUMENT_KEY)?.let {
-                        PasswordDetails(Password.fromJson(it), scaffoldState)
+                        PasswordDetails(Password.fromJson(it), navController, scaffoldState)
                     }
                     shouldShowBackButton = true
                 }
-                composable(ROUTE_PASSWORD_ADD) {
-                    PasswordAddScreen(scaffoldState, navController)
+                composable(
+                    "$ROUTE_PASSWORD_EDIT/{password}",
+                    listOf(navArgument(PASSWORD_ARGUMENT_KEY) { type = NavType.StringType })
+                ) { backStackEntry ->
+                    backStackEntry.arguments?.getString(PASSWORD_ARGUMENT_KEY)?.let {
+                        PasswordEditScreen(Password.fromJson(it), scaffoldState, navController)
+                    }
                     shouldShowBackButton = true
                 }
             }
@@ -92,5 +102,6 @@ class MyPasswordsActivity : ComponentActivity() {
         const val ROUTE_LOGIN_SCREEN = "loginScreen"
         const val ROUTE_PASSWORD_DETAILS = "passwordDetails"
         const val ROUTE_PASSWORD_ADD = "passwordAdd"
+        const val ROUTE_PASSWORD_EDIT = "passwordEdit"
     }
 }
