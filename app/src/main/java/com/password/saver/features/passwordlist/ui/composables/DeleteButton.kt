@@ -21,10 +21,12 @@ import com.password.saver.ui.theme.RedDark
 
 @Composable
 fun DeleteButton(
+    modifier: Modifier = Modifier,
     text: String = stringResource(id = R.string.delete),
     onClick: () -> Unit
 ) {
     Button(
+        modifier = modifier,
         shape = CircleShape,
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(

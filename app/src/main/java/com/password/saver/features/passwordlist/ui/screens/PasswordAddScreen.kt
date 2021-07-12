@@ -19,13 +19,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.password.saver.R
 import com.password.saver.features.passwordlist.PasswordsViewModel
-import com.password.saver.features.passwordlist.ui.composables.IconRightButton
+import com.password.saver.ui.appcomposables.IconRightButton
 import com.password.saver.models.Password
 import com.password.saver.ui.theme.ColorPrimary
 import com.password.saver.ui.theme.PasswordSaverTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
-import org.koin.core.context.GlobalContext
 
 
 @Composable

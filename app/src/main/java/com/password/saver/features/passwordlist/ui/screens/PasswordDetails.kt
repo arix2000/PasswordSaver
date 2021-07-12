@@ -14,12 +14,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.password.saver.MyPasswordsActivity.Companion.ROUTE_PASSWORD_EDIT
 import com.password.saver.R
 import com.password.saver.features.passwordlist.ui.composables.DeleteButton
-import com.password.saver.features.passwordlist.ui.composables.IconRightButton
+import com.password.saver.features.passwordlist.ui.composables.DialogDemo
+import com.password.saver.ui.appcomposables.IconRightButton
 import com.password.saver.models.Password
 import com.password.saver.ui.appcomposables.CopyButton
 import com.password.saver.ui.theme.ColorPrimary
@@ -28,13 +28,15 @@ import com.password.saver.ui.theme.PasswordSaverTheme
 
 @Composable
 fun PasswordDetails(
-    password2: Password,
+    passwordFromArgs: Password,
     navController: NavController,
     scaffoldState: ScaffoldState
 ) {
     val password = navController.currentBackStackEntry?.savedStateHandle
         ?.get<String>(Password.PASSWORD_ARGUMENT_KEY)
-        ?.let { Password.fromJson(it) } ?: password2
+        ?.let { Password.fromJson(it) } ?: passwordFromArgs
+
+    val (showDialog, setShowDialog) =  remember { mutableStateOf(false) }
 
     PasswordSaverTheme {
         Box {
@@ -81,7 +83,7 @@ fun PasswordDetails(
                     Spacer(modifier = Modifier.height(25.dp))
                     Row {
                         DeleteButton(onClick = {
-                            //TODO
+                            setShowDialog(true)
                         })
                         Spacer(modifier = Modifier.width(25.dp))
                         IconRightButton(
@@ -92,6 +94,7 @@ fun PasswordDetails(
                         }
                     }
                 }
+                DialogDemo(showDialog, setShowDialog, password, navController)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.password.saver.features.passwordlist.ui.composables
+package com.password.saver.ui.appcomposables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer

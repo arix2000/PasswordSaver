@@ -23,4 +23,7 @@
     <string name="approve">Zaktualizuj</string>
     <string name="updated">Zaktualizowano!</string>
     <string name="added">Dodano!</string>
+    <string name="sure_to_delete">Napewno chcesz usunąć wpis?</string>
+    <string name="deleted">Usunięto</string>
+    <string name="dismiss">Anuluj</string>
 </resources>
