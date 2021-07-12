@@ -32,7 +32,7 @@ fun DialogDemo(
     if (showDialog) {
         val viewModel = getViewModel<PasswordsViewModel>()
         AlertDialog(
-            onDismissRequest = {},
+            onDismissRequest = { setShowDialog(false) },
             title = {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Text(
