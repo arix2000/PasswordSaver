@@ -1,5 +1,6 @@
 package com.password.saver.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.password.saver.models.Password
 import kotlinx.coroutines.flow.Flow
@@ -16,5 +17,5 @@ interface PasswordDao {
     suspend fun update(password: Password)
 
     @Query("SELECT * FROM password")
-    fun getAllPasswords(): Flow<List<Password>>
+    fun getAllPasswords(): LiveData<List<Password>>
 }

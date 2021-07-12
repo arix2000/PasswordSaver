@@ -36,7 +36,6 @@ import com.password.saver.ui.theme.PasswordSaverTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
-
 @ExperimentalComposeUiApi
 @Composable
 fun PasswordAddScreen(

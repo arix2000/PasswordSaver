@@ -16,7 +16,7 @@
     <string name="delete">Usuń</string>
     <string name="title_with_colon">Tytuł:</string>
     <string name="title">Tytuł</string>
-    <string name="add_new_password">Dodaj nowe wpis</string>
+    <string name="add_new_password">Dodaj nowy wpis</string>
     <string name="edit_password">Edytuj wpis</string>
     <string name="add">Dodaj</string>
     <string name="all_pools_required">Wszystkie pola są wymagane!</string>
@@ -26,4 +26,7 @@
     <string name="sure_to_delete">Napewno chcesz usunąć wpis?</string>
     <string name="deleted">Usunięto</string>
     <string name="dismiss">Anuluj</string>
+    <string name="no_passwords_saved">Brak zapisanych haseł</string>
+    <string name="add_first_password">Dodaj swój pierwszy wpis klikając w \"+\" w prawym dolnym rogu!</string>
+    <string name="add_password_pointer">Dodaj wpis</string>
 </resources>

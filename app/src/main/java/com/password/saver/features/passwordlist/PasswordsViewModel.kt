@@ -1,9 +1,11 @@
 package com.password.saver.features.passwordlist
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.password.saver.models.Password
 import com.password.saver.repositories.PasswordsRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.yield
 
 class PasswordsViewModel(private val repository: PasswordsRepository): ViewModel() {
 
@@ -19,7 +21,7 @@ class PasswordsViewModel(private val repository: PasswordsRepository): ViewModel
         repository.update(password)
     }
 
-    fun getPasswords(): Flow<List<Password>> {
+    fun getPasswords(): LiveData<List<Password>> {
         return repository.getPasswords()
     }
 }

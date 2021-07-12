@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -26,6 +27,7 @@ import com.password.saver.ui.appcomposables.TopBar
 
 class MyPasswordsActivity : ComponentActivity() {
 
+    @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSoftInputMode(true)
@@ -34,6 +36,7 @@ class MyPasswordsActivity : ComponentActivity() {
         }
     }
 
+    @ExperimentalComposeUiApi
     @Composable
     private fun AppContent() {
         var shouldShowBackButton by remember { mutableStateOf(false) }
@@ -90,6 +93,7 @@ class MyPasswordsActivity : ComponentActivity() {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
     }
 
+    @ExperimentalComposeUiApi
     @Preview
     @Composable
     private fun DefaultPreview() {

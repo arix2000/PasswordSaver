@@ -1,5 +1,6 @@
 package com.password.saver.repositories
 
+import androidx.lifecycle.LiveData
 import com.password.saver.database.dao.PasswordDao
 import com.password.saver.models.Password
 import kotlinx.coroutines.CoroutineScope
@@ -28,7 +29,7 @@ class PasswordsRepository(private val dao: PasswordDao) {
         }
     }
 
-    fun getPasswords(): Flow<List<Password>> {
+    fun getPasswords(): LiveData<List<Password>> {
         return dao.getAllPasswords()
     }
 }

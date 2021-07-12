@@ -20,24 +20,19 @@ import com.password.saver.models.Password
 
 @Composable
 fun PasswordList(passwords: List<Password>, navController: NavController) {
-    Box {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(6.dp),
-                modifier = Modifier.padding(8.dp)
-            ) {
-                items(passwords) { password ->
-                    ListItemPassword(password = password) {
-                        openDetails(navController, password)
-                    }
-                }
-                item {
-                    Spacer(modifier = Modifier.height(60.dp))
+    Surface(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.padding(8.dp)
+        ) {
+            items(passwords) { password ->
+                ListItemPassword(password = password) {
+                    openDetails(navController, password)
                 }
             }
-        }
-        AddFloatingButton(modifier = Modifier.align(Alignment.BottomEnd)) {
-            navController.navigate(ROUTE_PASSWORD_ADD)
+            item {
+                Spacer(modifier = Modifier.height(60.dp))
+            }
         }
     }
 }
