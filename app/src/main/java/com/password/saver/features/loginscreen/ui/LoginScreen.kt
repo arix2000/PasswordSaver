@@ -2,6 +2,7 @@ package com.password.saver.features.loginscreen.ui
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -11,7 +12,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -40,6 +44,11 @@ fun LoginScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
+                Image(
+                    painterResource(R.drawable.app_logo),
+                    contentDescription = "AppLogo",
+                    modifier = Modifier.size(120.dp))
+                Box(modifier = Modifier.height(25.dp))
                 Text(
                     text = stringResource(R.string.enter_password),
                     textAlign = TextAlign.Center,
