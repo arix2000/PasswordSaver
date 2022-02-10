@@ -5,20 +5,23 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.password.saver.MyPasswordsActivity.Companion.ROUTE_PASSWORD_EDIT
 import com.password.saver.R
 import com.password.saver.features.passwordlist.ui.composables.DeleteButton
-import com.password.saver.features.passwordlist.ui.composables.DialogDemo
+import com.password.saver.features.passwordlist.ui.composables.DeleteAlertDialog
 import com.password.saver.ui.appcomposables.IconRightButton
 import com.password.saver.models.Password
 import com.password.saver.ui.appcomposables.CopyButton
@@ -26,6 +29,7 @@ import com.password.saver.ui.theme.ColorPrimary
 import com.password.saver.ui.theme.PasswordSaverTheme
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PasswordDetails(
     passwordFromArgs: Password,
@@ -36,7 +40,14 @@ fun PasswordDetails(
         ?.get<String>(Password.PASSWORD_ARGUMENT_KEY)
         ?.let { Password.fromJson(it) } ?: passwordFromArgs
 
-    val (showDialog, setShowDialog) =  remember { mutableStateOf(false) }
+    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+    var passwordVisibility by remember { mutableStateOf(false) }
+    var showedPassword by remember { mutableStateOf("") }
+    val showedIcon = if (!passwordVisibility) Icons.Rounded.Visibility else Icons.Rounded.VisibilityOff
+    showedPassword = if (!passwordVisibility)
+        password.password.map { "●" }.joinToString(separator = "")
+    else
+        password.password
 
     PasswordSaverTheme {
         Box {
@@ -46,6 +57,7 @@ fun PasswordDetails(
                     modifier = Modifier
                         .padding(10.dp)
                         .verticalScroll(rememberScrollState())
+                        .fillMaxWidth()
 
                 ) {
                     Spacer(modifier = Modifier.height(30.dp))
@@ -54,6 +66,7 @@ fun PasswordDetails(
                         text = password.title,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
                         color = ColorPrimary,
                     )
                     Spacer(modifier = Modifier.height(25.dp))
@@ -65,21 +78,33 @@ fun PasswordDetails(
                         textAlign = TextAlign.Center
                     )
                     CopyButton(
-                        password = password,
+                        textToCopy = password.login,
                         scaffoldState = scaffoldState
                     )
                     Spacer(modifier = Modifier.height(25.dp))
                     Text(text = stringResource(R.string.password_with_colon), fontSize = 18.sp)
                     Text(
-                        text = password.password,
+                        text = showedPassword,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
-                    CopyButton(
-                        password = password,
-                        scaffoldState = scaffoldState
-                    )
+                    Row {
+                        CopyButton(
+                            textToCopy = password.password,
+                            scaffoldState = scaffoldState
+                        )
+                        IconButton(
+                            onClick = {
+                                passwordVisibility = !passwordVisibility
+                            }
+                        ) {
+                            Icon(
+                                imageVector = showedIcon,
+                                contentDescription = "copyContent"
+                            )
+                        }
+                    }
                     Spacer(modifier = Modifier.height(25.dp))
                     Row {
                         DeleteButton(onClick = {
@@ -94,8 +119,20 @@ fun PasswordDetails(
                         }
                     }
                 }
-                DialogDemo(showDialog, setShowDialog, password, navController)
+                DeleteAlertDialog(showDialog, setShowDialog, password, navController)
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun PasswordDetailsPreview() {
+    PasswordSaverTheme {
+        PasswordDetails(
+            Password("TEST", "ASDASDASD", "ASDASDAS"),
+            rememberNavController(),
+            rememberScaffoldState()
+        )
     }
 }

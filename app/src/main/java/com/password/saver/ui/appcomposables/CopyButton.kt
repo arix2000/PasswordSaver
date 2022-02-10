@@ -1,6 +1,8 @@
 package com.password.saver.ui.appcomposables
 
+import android.content.ClipData
 import android.content.Context
+import android.os.Build
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.ScaffoldState
@@ -18,13 +20,13 @@ import com.password.saver.models.Password
 import kotlinx.coroutines.launch
 
 @Composable
-fun CopyButton(password: Password, scaffoldState: ScaffoldState) {
+fun CopyButton(textToCopy: String, scaffoldState: ScaffoldState) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val copiedStr = stringResource(R.string.copied)
     IconButton(
         onClick = {
-            copyToClipboard(password.password, context)
+            copyToClipboard(context, textToCopy)
             scope.launch {
                 scaffoldState.snackbarHostState.showSnackbar(copiedStr)
             }
@@ -37,7 +39,9 @@ fun CopyButton(password: Password, scaffoldState: ScaffoldState) {
     }
 }
 
-private fun copyToClipboard(text: String, context: Context) {
-    val clipboard = ContextCompat.getSystemService(context, ClipboardManager::class.java)
-    clipboard?.setText(AnnotatedString(text, ParagraphStyle()))
+private fun copyToClipboard(context: Context, text: String) {
+    val clipboard =
+        context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+    val clip = ClipData.newPlainText("Copied Text", text)
+    clipboard.setPrimaryClip(clip)
 }

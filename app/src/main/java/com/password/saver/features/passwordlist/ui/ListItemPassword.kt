@@ -15,10 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.password.saver.R
 import com.password.saver.models.Password
+import com.password.saver.ui.theme.PasswordSaverTheme
 import com.password.saver.ui.theme.VioletDark
 
 @Composable
@@ -34,7 +36,10 @@ fun ListItemPassword(password: Password, onClick: () -> Unit) {
                 .clickable { onClick() }
             ) {
 
-            Column(Modifier.padding(horizontal = 20.dp, vertical = 10.dp).padding(end = 30.dp)) {
+            Column(
+                Modifier
+                    .padding(horizontal = 20.dp, vertical = 10.dp)
+                    .padding(end = 30.dp)) {
                 Text(
                     text = password.title,
                     maxLines = 1,
@@ -59,7 +64,7 @@ fun ListItemPassword(password: Password, onClick: () -> Unit) {
                     Text(text = stringResource(R.string.password_with_colon))
                     Spacer(modifier = Modifier.width(5.dp))
                     Text(
-                        text = password.password,
+                        text = password.password.map { "●" }.joinToString(separator = ""),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.W500,
@@ -76,6 +81,16 @@ fun ListItemPassword(password: Password, onClick: () -> Unit) {
                     .size(30.dp)
             )
             Spacer(modifier = Modifier.width(25.dp))
+        }
+    }
+}
+
+@Preview
+@Composable
+fun DefaultPreview() {
+    PasswordSaverTheme {
+        ListItemPassword(password = Password("Title", "Login", "Password")) {
+
         }
     }
 }

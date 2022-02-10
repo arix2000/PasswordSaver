@@ -1,18 +1,18 @@
 package com.password.saver.features.passwordlist.ui.screens
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -24,15 +24,19 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.password.saver.R
+import com.password.saver.extensions.showSnackBar
 import com.password.saver.features.passwordlist.PasswordsViewModel
 import com.password.saver.models.Password
 import com.password.saver.ui.appcomposables.IconRightButton
 import com.password.saver.ui.theme.ColorPrimary
 import com.password.saver.ui.theme.PasswordSaverTheme
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
@@ -46,6 +50,9 @@ fun PasswordAddScreen(
     var login by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
     val viewModel = getViewModel<PasswordsViewModel>()
+    var passwordVisibility by remember { mutableStateOf(false) }
+    val showedIcon =
+        if (!passwordVisibility) Icons.Rounded.Visibility else Icons.Rounded.VisibilityOff
 
     val focusRequester = remember { FocusRequester() }
     val focusRequester2 = remember { FocusRequester() }
@@ -105,10 +112,20 @@ fun PasswordAddScreen(
                         value = passwordValue,
                         onValueChange = { passwordValue = it },
                         shape = CircleShape,
+                        trailingIcon = {
+                            Icon(
+                                modifier = Modifier.clickable {
+                                    passwordVisibility = !passwordVisibility
+                                },
+                                imageVector = showedIcon,
+                                contentDescription = null
+                            )
+                        },
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                         keyboardActions = KeyboardActions {
                             keyboardController?.hide()
                         },
+                        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                         modifier = Modifier.focusRequester(focusRequester2)
                     )
 
@@ -126,10 +143,7 @@ fun PasswordAddScreen(
                             Toast.makeText(context, R.string.added, Toast.LENGTH_SHORT).show()
                             navController.navigateUp()
                         } else {
-                            scope.launch {
-                                scaffoldState.snackbarHostState
-                                    .showSnackbar(snackBarText)
-                            }
+                            scope.showSnackBar(scaffoldState.snackbarHostState, snackBarText)
                         }
                     }
                 }

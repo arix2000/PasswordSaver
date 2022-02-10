@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.password.saver.MyPasswordsActivity.Companion.ROUTE_CHANGE_PASS_SCREEN
 import com.password.saver.MyPasswordsActivity.Companion.ROUTE_PASSWORD_LIST
 import com.password.saver.R
 import com.password.saver.features.loginscreen.LoginViewModel
@@ -35,43 +37,59 @@ fun LoginScreen(navController: NavController) {
     val correctPassword by viewModel.getMainPassword().observeAsState()
     val context = LocalContext.current
     PasswordSaverTheme {
-        Surface(
-            color = MaterialTheme.colors.background,
+        Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier.verticalScroll(rememberScrollState())
+            Surface(
+                color = MaterialTheme.colors.background,
+                modifier = Modifier.fillMaxSize()
             ) {
-                Image(
-                    painterResource(R.drawable.app_logo),
-                    contentDescription = "AppLogo",
-                    modifier = Modifier.size(120.dp))
-                Box(modifier = Modifier.height(25.dp))
-                Text(
-                    text = stringResource(R.string.enter_password),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    fontSize = 20.sp
-                )
-                Box(modifier = Modifier.height(25.dp))
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text(stringResource(R.string.password)) },
-                    shape = CircleShape,
-                    visualTransformation = PasswordVisualTransformation()
-                )
-                Box(modifier = Modifier.height(25.dp))
-                Button(onClick = { checkPassword(context ,navController, password, correctPassword) }, shape = CircleShape) {
-                    Text(text = stringResource(R.string.next).uppercase(), Modifier.padding(3.dp))
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                ) {
+                    Image(
+                        painterResource(R.drawable.app_logo),
+                        contentDescription = "AppLogo",
+                        modifier = Modifier.size(120.dp)
+                    )
+                    Box(modifier = Modifier.height(25.dp))
+                    Text(
+                        text = stringResource(R.string.enter_password),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        fontSize = 20.sp
+                    )
+                    Box(modifier = Modifier.height(25.dp))
+                    OutlinedTextField(
+                        value = password,
+                        onValueChange = { password = it },
+                        label = { Text(stringResource(R.string.password)) },
+                        shape = CircleShape,
+                        visualTransformation = PasswordVisualTransformation()
+                    )
+                    Box(modifier = Modifier.height(25.dp))
+                    Button(onClick = {
+                        checkPassword(
+                            context,
+                            navController,
+                            password,
+                            correctPassword
+                        )
+                    }, shape = CircleShape) {
+                        Text(
+                            text = stringResource(R.string.next).uppercase(),
+                            Modifier.padding(3.dp)
+                        )
+                    }
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 private fun checkPassword(
     context: Context,
     navController: NavController,

@@ -9,6 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -23,7 +24,7 @@ import com.password.saver.features.loginscreen.LoginViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun SetupPasswordScreen(navController: NavController) {
+fun SetupPasswordScreen(navController: NavController, showTitle: Boolean = true) {
     var password by remember { mutableStateOf("") }
     var secondPassword by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -37,12 +38,13 @@ fun SetupPasswordScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
-            Text(
-                text = stringResource(R.string.setup_password),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                fontSize = 20.sp
-            )
+            if (showTitle)
+                Text(
+                    text = stringResource(R.string.setup_password),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    fontSize = 20.sp
+                )
             Box(modifier = Modifier.height(25.dp))
             OutlinedTextField(
                 value = password,
@@ -73,6 +75,7 @@ fun SetupPasswordScreen(navController: NavController) {
 }
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 private fun validatePasswords(
     password: String,
     secondPassword: String,

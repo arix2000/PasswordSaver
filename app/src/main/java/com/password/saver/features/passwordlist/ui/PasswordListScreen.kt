@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.password.saver.MyPasswordsActivity
@@ -22,8 +23,9 @@ import com.password.saver.ui.theme.PasswordSaverTheme
 import org.koin.androidx.compose.getViewModel
 
 
+@ExperimentalComposeUiApi
 @Composable
-fun PasswordsFragment(navController: NavController) {
+fun PasswordsListScreen(navController: NavController) {
     val passwordsViewModel = getViewModel<PasswordsViewModel>()
     val passwords by passwordsViewModel.getPasswords().observeAsState()
 

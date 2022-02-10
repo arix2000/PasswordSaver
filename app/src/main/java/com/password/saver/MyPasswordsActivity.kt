@@ -13,10 +13,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.password.saver.features.loginscreen.ui.ChangePasswordScreen
 import com.password.saver.features.loginscreen.ui.LoginFragment
 import com.password.saver.features.loginscreen.ui.LoginScreen
 import com.password.saver.features.passwordlist.ui.screens.PasswordDetails
-import com.password.saver.features.passwordlist.ui.PasswordsFragment
+import com.password.saver.features.passwordlist.ui.PasswordsListScreen
 import com.password.saver.features.passwordlist.ui.screens.PasswordAddScreen
 import com.password.saver.features.passwordlist.ui.screens.PasswordEditScreen
 import com.password.saver.models.Password
@@ -24,10 +25,9 @@ import com.password.saver.models.Password.Companion.PASSWORD_ARGUMENT_KEY
 import com.password.saver.ui.appcomposables.AppSnackBarHost
 import com.password.saver.ui.appcomposables.TopBar
 
-
+@ExperimentalComposeUiApi
 class MyPasswordsActivity : ComponentActivity() {
 
-    @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSoftInputMode(true)
@@ -40,6 +40,7 @@ class MyPasswordsActivity : ComponentActivity() {
     @Composable
     private fun AppContent() {
         var shouldShowBackButton by remember { mutableStateOf(false) }
+        var shouldShowDropDownMenu by remember { mutableStateOf(false) }
         val navController = rememberNavController()
         val scaffoldState = rememberScaffoldState()
         Scaffold(
@@ -52,17 +53,24 @@ class MyPasswordsActivity : ComponentActivity() {
                     LoginFragment(navController)
                     shouldShowBackButton = false
                 }
+                composable(ROUTE_CHANGE_PASS_SCREEN) {
+                    ChangePasswordScreen(navController)
+                    shouldShowBackButton = true
+                    shouldShowDropDownMenu = false
+                }
                 composable(ROUTE_PASSWORD_LIST) {
-                    PasswordsFragment(navController)
+                    PasswordsListScreen(navController)
                     shouldShowBackButton = true
                 }
                 composable(ROUTE_LOGIN_SCREEN) {
                     LoginScreen(navController)
                     shouldShowBackButton = false
+                    shouldShowDropDownMenu = false
                 }
                 composable(ROUTE_PASSWORD_ADD) {
                     PasswordAddScreen(scaffoldState, navController)
                     shouldShowBackButton = true
+                    shouldShowDropDownMenu = false
                 }
                 composable(
                     "$ROUTE_PASSWORD_DETAILS/{password}",
@@ -72,6 +80,7 @@ class MyPasswordsActivity : ComponentActivity() {
                         PasswordDetails(Password.fromJson(it), navController, scaffoldState)
                     }
                     shouldShowBackButton = true
+                    shouldShowDropDownMenu = false
                 }
                 composable(
                     "$ROUTE_PASSWORD_EDIT/{password}",
@@ -81,6 +90,7 @@ class MyPasswordsActivity : ComponentActivity() {
                         PasswordEditScreen(Password.fromJson(it), scaffoldState, navController)
                     }
                     shouldShowBackButton = true
+                    shouldShowDropDownMenu = false
                 }
             }
         }
@@ -102,6 +112,7 @@ class MyPasswordsActivity : ComponentActivity() {
 
     companion object {
         const val ROUTE_LOGIN_FRAGMENT = "loginFragment"
+        const val ROUTE_CHANGE_PASS_SCREEN = "changePassScreen"
         const val ROUTE_PASSWORD_LIST = "passwordList"
         const val ROUTE_LOGIN_SCREEN = "loginScreen"
         const val ROUTE_PASSWORD_DETAILS = "passwordDetails"

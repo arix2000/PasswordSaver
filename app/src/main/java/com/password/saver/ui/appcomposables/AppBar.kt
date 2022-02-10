@@ -34,7 +34,6 @@ fun TopBar(navController: NavController, shouldShowBackButton: Boolean) {
             text = stringResource(R.string.app_name),
             fontSize = 20.sp,
             fontWeight = FontWeight.SemiBold
-        )
-
+        )//TODO add dropdown menu icon with change password option
     }
 }

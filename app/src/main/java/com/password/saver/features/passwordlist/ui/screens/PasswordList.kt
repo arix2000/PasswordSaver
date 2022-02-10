@@ -9,6 +9,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -37,6 +38,7 @@ fun PasswordList(passwords: List<Password>, navController: NavController) {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 fun openDetails(navController: NavController, password: Password) {
     navController.navigate("$ROUTE_PASSWORD_DETAILS/${password.toJson()}")
 }
