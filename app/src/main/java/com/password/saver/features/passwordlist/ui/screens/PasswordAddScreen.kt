@@ -1,8 +1,11 @@
 package com.password.saver.features.passwordlist.ui.screens
 
 import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -19,6 +22,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -36,10 +41,10 @@ import com.password.saver.models.Password
 import com.password.saver.ui.appcomposables.IconRightButton
 import com.password.saver.ui.theme.ColorPrimary
 import com.password.saver.ui.theme.PasswordSaverTheme
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalComposeUiApi
 @Composable
 fun PasswordAddScreen(
@@ -48,6 +53,7 @@ fun PasswordAddScreen(
 ) {
     var title by remember { mutableStateOf("") }
     var login by remember { mutableStateOf("") }
+    val scrollState = rememberScrollState()
     var passwordValue by remember { mutableStateOf("") }
     val viewModel = getViewModel<PasswordsViewModel>()
     var passwordVisibility by remember { mutableStateOf(false) }
@@ -57,6 +63,8 @@ fun PasswordAddScreen(
     val focusRequester = remember { FocusRequester() }
     val focusRequester2 = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    val coroutineScope = rememberCoroutineScope()
 
     PasswordSaverTheme {
         Box {
@@ -66,9 +74,8 @@ fun PasswordAddScreen(
                     verticalArrangement = Arrangement.spacedBy(5.dp),
                     modifier = Modifier
                         .padding(10.dp)
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(scrollState)
                 ) {
-
                     Spacer(modifier = Modifier.height(30.dp))
 
                     Text(
@@ -126,7 +133,11 @@ fun PasswordAddScreen(
                             keyboardController?.hide()
                         },
                         visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                        modifier = Modifier.focusRequester(focusRequester2)
+                        modifier = Modifier
+                            .onFocusEvent { coroutineScope.launch { bringIntoViewRequester.bringIntoView() } }
+                            .focusRequester(focusRequester2)
+                            .bringIntoViewRequester(bringIntoViewRequester)
+                            .onFocusChanged { coroutineScope.launch { bringIntoViewRequester.bringIntoView() } },
                     )
 
                     Spacer(modifier = Modifier.height(25.dp))
