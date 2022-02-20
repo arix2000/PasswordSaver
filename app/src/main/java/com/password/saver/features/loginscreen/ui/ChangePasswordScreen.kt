@@ -20,12 +20,6 @@ fun ChangePasswordScreen(navController: NavController) {
     PasswordSaverTheme {
         Surface {
             Column {
-                Text(
-                    text = stringResource(R.string.change_pass),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    fontSize = 20.sp
-                )
                 SetupPasswordScreen(navController = navController, showTitle = false)
             }
         }

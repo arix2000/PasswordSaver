@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 class LoginRepository(
     private val dataStore: DataStore<Preferences>
 ) {
-
     fun getMainPassword(): Flow<String?> {
         return dataStore.data.map { it[MAIN_PASSWORD] }
     }

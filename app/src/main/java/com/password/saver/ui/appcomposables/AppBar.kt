@@ -28,7 +28,8 @@ import com.password.saver.R
 fun TopBar(
     navController: NavController,
     shouldShowBackButton: Boolean,
-    shouldShowDropDownMenu: Boolean
+    shouldShowDropDownMenu: Boolean,
+    title: String
 ) {
     TopAppBar {
         Box {
@@ -44,7 +45,7 @@ fun TopBar(
                     }
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = stringResource(R.string.app_name),
+                    text = title,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -69,6 +70,7 @@ private fun DefaultPreview() {
     TopBar(
         navController = rememberNavController(),
         shouldShowBackButton = true,
-        shouldShowDropDownMenu = true
+        shouldShowDropDownMenu = true,
+        "Twoje Hasła"
     )
 }

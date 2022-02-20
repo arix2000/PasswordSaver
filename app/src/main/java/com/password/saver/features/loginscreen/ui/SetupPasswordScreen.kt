@@ -38,13 +38,12 @@ fun SetupPasswordScreen(navController: NavController, showTitle: Boolean = true)
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
-            if (showTitle)
-                Text(
-                    text = stringResource(R.string.setup_password),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    fontSize = 20.sp
-                )
+            Text(
+                text = stringResource(R.string.setup_password),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                fontSize = 20.sp
+            )
             Box(modifier = Modifier.height(25.dp))
             OutlinedTextField(
                 value = password,
