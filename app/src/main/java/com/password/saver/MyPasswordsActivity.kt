@@ -33,6 +33,10 @@ class MyPasswordsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSoftInputMode(true)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
         setContent {
             AppContent()
         }
@@ -48,7 +52,14 @@ class MyPasswordsActivity : ComponentActivity() {
         val scaffoldState = rememberScaffoldState()
         Scaffold(
             scaffoldState = scaffoldState,
-            topBar = { TopBar(navController, shouldShowBackButton, shouldShowChangePasswordIcon, appTopBarTitle) },
+            topBar = {
+                TopBar(
+                    navController,
+                    shouldShowBackButton,
+                    shouldShowChangePasswordIcon,
+                    appTopBarTitle
+                )
+            },
             snackbarHost = { AppSnackBarHost(hostState = it) },
             backgroundColor = Color.Black
         ) {

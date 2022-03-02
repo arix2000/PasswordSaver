@@ -6,6 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -14,8 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,12 +32,14 @@ import com.password.saver.features.loginscreen.LoginViewModel
 import com.password.saver.ui.theme.PasswordSaverTheme
 import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     val viewModel = getViewModel<LoginViewModel>()
     val correctPassword by viewModel.getMainPassword().observeAsState()
     val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
     PasswordSaverTheme {
         Box(
             modifier = Modifier.fillMaxSize()
@@ -63,6 +70,13 @@ fun LoginScreen(navController: NavController) {
                         value = password,
                         onValueChange = { password = it },
                         label = { Text(stringResource(R.string.password)) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Password,
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions {
+                            keyboardController?.hide()
+                        },
                         shape = CircleShape,
                         visualTransformation = PasswordVisualTransformation()
                     )

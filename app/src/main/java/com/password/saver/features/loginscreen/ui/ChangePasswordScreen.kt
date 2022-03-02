@@ -21,6 +21,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +53,6 @@ fun ChangePasswordScreen(navController: NavController) {
     val focusRequester = remember { FocusRequester() }
     val focusRequester2 = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
-
     PasswordSaverTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -70,7 +70,10 @@ fun ChangePasswordScreen(navController: NavController) {
                             isOldPasswordVisible = !isOldPasswordVisible
                         }
                     },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Next
+                    ),
                     keyboardActions = KeyboardActions {
                         focusRequester.requestFocus()
                     }
@@ -87,7 +90,10 @@ fun ChangePasswordScreen(navController: NavController) {
                             isNewPasswordVisible = !isNewPasswordVisible
                         }
                     },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Next
+                    ),
                     keyboardActions = KeyboardActions {
                         focusRequester2.requestFocus()
                     },
@@ -100,7 +106,10 @@ fun ChangePasswordScreen(navController: NavController) {
                     label = { Text("Powtórz hasło") },
                     shape = CircleShape,
                     visualTransformation = PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    ),
                     keyboardActions = KeyboardActions {
                         keyboardController?.hide()
                     },
@@ -121,7 +130,7 @@ fun ChangePasswordScreen(navController: NavController) {
                     },
                     shape = CircleShape
                 ) {
-                    Text(text = "Ustaw".uppercase(), Modifier.padding(3.dp))
+                    Text(text = "Zmień hasło".uppercase(), Modifier.padding(3.dp))
                 }
             }
         }

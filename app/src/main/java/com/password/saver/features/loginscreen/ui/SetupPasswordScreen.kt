@@ -5,14 +5,21 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -23,12 +30,17 @@ import com.password.saver.R
 import com.password.saver.features.loginscreen.LoginViewModel
 import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SetupPasswordScreen(navController: NavController, showTitle: Boolean = true) {
+fun SetupPasswordScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var secondPassword by remember { mutableStateOf("") }
     val context = LocalContext.current
     val viewModel = getViewModel<LoginViewModel>()
+
+    val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
@@ -50,7 +62,14 @@ fun SetupPasswordScreen(navController: NavController, showTitle: Boolean = true)
                 onValueChange = { password = it },
                 label = { Text("Hasło") },
                 shape = CircleShape,
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardActions = KeyboardActions {
+                    focusRequester.requestFocus()
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Next
+                ),
             )
             Box(modifier = Modifier.height(25.dp))
             OutlinedTextField(
@@ -58,7 +77,15 @@ fun SetupPasswordScreen(navController: NavController, showTitle: Boolean = true)
                 onValueChange = { secondPassword = it },
                 label = { Text("Powtórz hasło") },
                 shape = CircleShape,
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.focusRequester(focusRequester),
+                keyboardActions = KeyboardActions {
+                    keyboardController?.hide()
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                ),
             )
             Box(modifier = Modifier.height(25.dp))
             Button(
