@@ -30,4 +30,6 @@
     <string name="add_first_password">Dodaj swój pierwszy wpis klikając w \"+\" w prawym dolnym rogu!</string>
     <string name="add_password_pointer">Dodaj wpis</string>
     <string name="change_pass">Zmień hasło</string>
+    <string name="password_has_been_changed">Zmieniono hasło</string>
+    <string name="wrong_old_password">Niepoprawne stare hasło!</string>
 </resources>
