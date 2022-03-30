@@ -17,13 +17,9 @@ data class Password(
         return Gson().toJson(this)
     }
 
-    fun isEmpty(): Boolean {
-        return title.isEmpty() && login.isEmpty() && password.isEmpty()
-    }
-
     companion object {
         const val PASSWORD_ARGUMENT_KEY = "password"
-        val EMPTY = Password("","","")
+        private val EMPTY = Password("","","")
 
         fun fromJson(string: String): Password {
             return if (string.isNotBlank())

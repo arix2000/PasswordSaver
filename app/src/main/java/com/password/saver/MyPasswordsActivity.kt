@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.password.saver.extensions.fromSafeNavString
 import com.password.saver.features.loginscreen.ui.ChangePasswordScreen
 import com.password.saver.features.loginscreen.ui.LoginFragment
 import com.password.saver.features.loginscreen.ui.LoginScreen
@@ -99,7 +100,11 @@ class MyPasswordsActivity : ComponentActivity() {
                     listOf(navArgument(PASSWORD_ARGUMENT_KEY) { type = NavType.StringType })
                 ) { backStackEntry ->
                     backStackEntry.arguments?.getString(PASSWORD_ARGUMENT_KEY)?.let {
-                        PasswordDetails(Password.fromJson(it), navController, scaffoldState)
+                        PasswordDetails(
+                            Password.fromJson(it.fromSafeNavString()),
+                            navController,
+                            scaffoldState
+                        )
                     }
                     shouldShowBackButton = true
                     shouldShowChangePasswordIcon = false
