@@ -1,3 +1,35 @@
 <resources>
-    <string name="app_name">PasswordSaver</string>
+    <string name="app_name">Twoje Hasła</string>
+    <string name="enter_password">Podaj swoje hasło:</string>
+    <string name="setup_password">Ustaw swoje hasło:</string>
+    <string name="different_passwords">Hasła różnią się od siebie</string>
+    <string name="password">Hasło</string>
+    <string name="repeat_password">Powtórz hasło</string>
+    <string name="empty_pools">Zostały puste pola</string>
+    <string name="wrong_password">Nieprawidłowe hasło</string>
+    <string name="next">Dalej</string>
+    <string name="login_with_colon">Login:</string>
+    <string name="login">Login</string>
+    <string name="password_with_colon">Hasło:</string>
+    <string name="copied">Skopiowano!</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
+    <string name="title_with_colon">Tytuł:</string>
+    <string name="title">Tytuł</string>
+    <string name="add_new_password">Dodaj nowy wpis</string>
+    <string name="edit_password">Edytuj wpis</string>
+    <string name="add">Dodaj</string>
+    <string name="all_pools_required">Wszystkie pola są wymagane!</string>
+    <string name="approve">Zaktualizuj</string>
+    <string name="updated">Zaktualizowano!</string>
+    <string name="added">Dodano!</string>
+    <string name="sure_to_delete">Napewno chcesz usunąć wpis?</string>
+    <string name="deleted">Usunięto</string>
+    <string name="dismiss">Anuluj</string>
+    <string name="no_passwords_saved">Brak zapisanych haseł</string>
+    <string name="add_first_password">Dodaj swój pierwszy wpis klikając w \"+\" w prawym dolnym rogu!</string>
+    <string name="add_password_pointer">Dodaj wpis</string>
+    <string name="change_pass">Zmień hasło</string>
+    <string name="password_has_been_changed">Zmieniono hasło</string>
+    <string name="wrong_old_password">Niepoprawne stare hasło!</string>
 </resources>
